@@ -13,8 +13,8 @@ import {
   Alert
 } from 'react-native';
 import { GlobalColors } from '../../constants/GlobalColors';
-import InputField from '../../components/UI/InputField';
-import LinkButton from '../../components/UI/LinkButton';
+import InputField from '../../components/Reusable-Components/InputField';
+import LinkButton from '../../components/Reusable-Components/LinkButton';
 
 interface FormData {
   firstName: string;

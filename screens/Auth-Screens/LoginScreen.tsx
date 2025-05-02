@@ -12,9 +12,9 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { GlobalColors } from "../../constants/GlobalColors";
-import InputField from "../../components/UI/InputField";
-import LinkButton from "../../components/UI/LinkButton";
-import CustomButton from "../../components/UI/LoginButton";
+import InputField from "../../components/Reusable-Components/InputField";
+import LinkButton from "../../components/Reusable-Components/LinkButton";
+import CustomButton from "../../components/Reusable-Components/LoginButton";
 
 const LoginScreen = () => {
   const [emailAddress, setEmailAddress] = useState<string>("");
