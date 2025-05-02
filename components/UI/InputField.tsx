@@ -1,47 +1,77 @@
-import React, { useState } from "react";
-import { StyleSheet, View, TextInput, KeyboardTypeOptions, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { GlobalColors } from "../../constants/GlobalColors";
+import React, { useState } from 'react';
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  KeyboardTypeOptions,
+  ViewStyle,
+  TextStyle
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Assuming you're using Expo
 
-// Interface for the props that will be passed to the Custom Input Field Component
-interface CustomInputProps {
-  placeholder?: string;
+interface InputFieldProps {
+  placeholder: string;
   value: string;
-  icon_name: keyof typeof Ionicons.glyphMap;
+  icon_name: string;
+  onChangeText: (text: string) => void;
   keyboardType?: KeyboardTypeOptions;
   isPasswordField?: boolean;
-  onChangeText: (text: string) => void;
+  error?: string;
+  containerStyle?: ViewStyle;
+  inputStyle?: TextStyle;
 }
 
-const InputField: React.FC<CustomInputProps> = ({
+const InputField: React.FC<InputFieldProps> = ({
   placeholder,
   value,
   icon_name,
-  keyboardType = "default",
-  isPasswordField = false,
   onChangeText,
+  keyboardType = 'default',
+  isPasswordField = false,
+  error,
+  containerStyle,
+  inputStyle
 }) => {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [secureTextEntry, setSecureTextEntry] = useState<boolean>(isPasswordField);
+
+  const toggleSecureEntry = (): void => {
+    if (isPasswordField) {
+      setSecureTextEntry(prevState => !prevState);
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      {/* Left Icon */}
-      <Ionicons name={icon_name} size={25} color={GlobalColors.Deep_Blue} style={styles.icon} />
-
-      {/* Text Input */}
+    <View style={[
+      styles.container, 
+      containerStyle,
+      error ? styles.errorContainer : null
+    ]}>
+      <Ionicons 
+        name={icon_name} 
+        size={22} 
+        color="#757575" 
+        style={styles.icon} 
+      />
+      
       <TextInput
-        style={styles.input}
         placeholder={placeholder}
+        value={value}
         onChangeText={onChangeText}
         keyboardType={keyboardType}
-        value={value}
-        secureTextEntry={isPasswordField && !isPasswordVisible} // Hide text if it's a password field
+        secureTextEntry={secureTextEntry}
+        style={[styles.input, inputStyle]}
+        placeholderTextColor="#9E9E9E"
+        autoCapitalize="none"
       />
-
-      {/* Toggle Password Visibility Button */}
+      
       {isPasswordField && (
-        <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)} style={styles.eyeButton}>
-          <Ionicons name={isPasswordVisible ? "eye" : "eye-off"} size={25} color={GlobalColors.Deep_Blue} />
+        <TouchableOpacity onPress={toggleSecureEntry} style={styles.eyeIcon}>
+          <Ionicons
+            name={secureTextEntry ? 'eye-outline' : 'eye-off-outline'}
+            size={22}
+            color="#757575"
+          />
         </TouchableOpacity>
       )}
     </View>
@@ -50,27 +80,29 @@ const InputField: React.FC<CustomInputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#E3EDF7",
-    borderRadius: 30,
-    paddingHorizontal: 20,
-    height: 65,
-    borderWidth: 1.5,
-    borderColor: GlobalColors.Soft_Purple,
-    width: "100%",
-    marginBottom: 20
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F0F4F8',
+    borderRadius: 25,
+    paddingHorizontal: 16,
+    height: 56,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+  },
+  errorContainer: {
+    borderColor: '#D32F2F',
   },
   icon: {
-    marginRight: 10,
+    marginRight: 12,
   },
   input: {
     flex: 1,
     fontSize: 16,
-    color: GlobalColors.Royal_Blue,
+    color: '#333',
+    height: '100%',
   },
-  eyeButton: {
-    marginLeft: 10,
+  eyeIcon: {
+    padding: 5,
   },
 });
 

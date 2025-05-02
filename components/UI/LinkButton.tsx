@@ -1,28 +1,54 @@
-import React from "react";
-import { Text, StyleSheet, ViewStyle, TextStyle, Pressable } from "react-native";
+import React from 'react';
+import { Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle, GestureResponderEvent } from 'react-native';
+import { View } from 'react-native';
+import { GlobalColors } from '../../constants/GlobalColors';
 
 interface LinkButtonProps {
-  text: string;
-  onPress: () => void;
-  style?: ViewStyle | TextStyle; 
+  preText?: string;
+  linkText: string;
+  onPress: (event: GestureResponderEvent) => void;
+  containerStyle?: ViewStyle;
+  preTextStyle?: TextStyle;
+  linkTextStyle?: TextStyle;
 }
-
-const LinkButton: React.FC<LinkButtonProps> = ({ text, onPress, style }) => {
+const LinkButton: React.FC<LinkButtonProps> = ({ 
+  preText, 
+  linkText, 
+  onPress, 
+  containerStyle, 
+  preTextStyle, 
+  linkTextStyle 
+}) => {
   return (
-    <Pressable onPress={onPress} style={[styles.button, style]}>
-      <Text style={[styles.text, style]}>{text}</Text>
-    </Pressable>
+    <View style={[styles.container, containerStyle]}>
+      {preText && (
+        <Text style={[styles.preText, preTextStyle]}>
+          {preText}
+        </Text>
+      )}
+      <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
+        <Text style={[styles.linkText, linkTextStyle]}>
+          {linkText}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    paddingVertical: 0,
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  text: {
+  preText: {
+    color: '#757575',
     fontSize: 16,
-    color: '#000000',
-    fontWeight: 'bold'
+  },
+  linkText: {
+    color: GlobalColors.softGreen,
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 
