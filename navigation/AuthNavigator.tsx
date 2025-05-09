@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthStackParamList } from '../types';
+import { AuthStackParamList } from '../Types/types';
 import LoginScreen from '../screens/Auth-Screens/Screens/LoginScreen';
 import SignUpScreen from '../screens/Auth-Screens/Screens/SignUpScreen';
 import ForgotPassword from '../screens/Auth-Screens/Screens/ForgetPassword';
@@ -17,7 +17,7 @@ const AuthNavigator = () => {
   };
 
   return (
-    <Stack.Navigator initialRouteName={showSplash ? "Splash" : "Login"}>
+    <Stack.Navigator initialRouteName={showSplash ? "Splash" : "Login"} id={undefined}>
       {showSplash && (
         <Stack.Screen name="Splash" options={{ headerShown: false }}>
           {(props) => <SplashScreen {...props} onComplete={handleSplashComplete} />}

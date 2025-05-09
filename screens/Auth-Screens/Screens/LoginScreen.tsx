@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useState } from "react";
-import { AuthStackParamList } from "../../../types";
+import { AuthStackParamList } from "../../../Types/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { Login_Styles } from "../Styles/LoginScreen.styles";
@@ -32,7 +32,6 @@ const LoginScreen = () => {
       console.log("Login attempt with:", emailAddress);
       setIsLoading(false);
     }, 1500);
-
     //navigate
     // navigation.navigate('SignUp')
   };

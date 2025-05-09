@@ -5,7 +5,7 @@ import {
   Animated,
   SafeAreaView,
 } from 'react-native';
-import { Splash_Styles } from '../Styles/SplashScreen.Styles';
+import { Splash_Styles } from '../Styles/SplashScreen.styles';
 
 type SplashScreenProps = {
   onComplete: () => void;

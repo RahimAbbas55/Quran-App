@@ -9,11 +9,10 @@ import {
   ScrollView,
 } from "react-native";
 import { useState } from "react";
-import { GlobalColors } from "../../../constants/GlobalColors";
-import { AuthStackParamList } from "../../../types";
+import { AuthStackParamList } from "../../../Types/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
-import { ForgetPassword_Styles } from "../Styles/ForgetPassword.Styles";
+import { ForgetPassword_Styles } from "../Styles/ForgetPassword.styles";
 import InputField from "../../../components/Reusable-Components/InputField";
 import LinkButton from "../../../components/Reusable-Components/LinkButton";
 import AuthButton from "../../../components/Reusable-Components/AuthButton";
@@ -24,8 +23,7 @@ const ForgotPassword = () => {
   const [emailAddress, setEmailAddress] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [resetSent, setResetSent] = useState<boolean>(false);
-    const navigation = useNavigation<AuthStackNavProp>();
-
+  const navigation = useNavigation<AuthStackNavProp>();
 
   const handleResetPassword = () => {
     if (!emailAddress) return;
@@ -34,7 +32,7 @@ const ForgotPassword = () => {
       console.log("Password reset request for:", emailAddress);
       setIsLoading(false);
       setResetSent(true);
-      navigation.goBack()
+      navigation.goBack();
     }, 1500);
   };
 
@@ -59,10 +57,12 @@ const ForgotPassword = () => {
             {/* Title and message block */}
             <View style={ForgetPassword_Styles.textBlock}>
               <Text style={ForgetPassword_Styles.titleText}>
-                Forgot <Text style={ForgetPassword_Styles.accentText}>Password?</Text>
+                Forgot{" "}
+                <Text style={ForgetPassword_Styles.accentText}>Password?</Text>
               </Text>
               <Text style={ForgetPassword_Styles.subtitleText}>
-                Enter your email and we'll send you instructions to reset your password
+                Enter your email and we'll send you instructions to reset your
+                password
               </Text>
             </View>
 
@@ -81,8 +81,8 @@ const ForgotPassword = () => {
               </View>
 
               {/* Reset Password Button */}
-              <AuthButton 
-                onPress={handleResetPassword} 
+              <AuthButton
+                onPress={handleResetPassword}
                 isLoading={isLoading}
                 buttonText={resetSent ? "Email Sent" : "Send Reset Link"}
               />
@@ -91,7 +91,8 @@ const ForgotPassword = () => {
               {resetSent && (
                 <View style={ForgetPassword_Styles.successContainer}>
                   <Text style={ForgetPassword_Styles.successText}>
-                    We've sent you an email with instructions to reset your password.
+                    We've sent you an email with instructions to reset your
+                    password.
                   </Text>
                 </View>
               )}
@@ -109,18 +110,23 @@ const ForgotPassword = () => {
 
             {/* Instructions */}
             <View style={ForgetPassword_Styles.instructionsContainer}>
-              <Text style={ForgetPassword_Styles.instructionsTitle}>Didn't receive the email?</Text>
+              <Text style={ForgetPassword_Styles.instructionsTitle}>
+                Didn't receive the email?
+              </Text>
               <Text style={ForgetPassword_Styles.instructionsText}>
-                Check your spam folder or try again with a different email address.
+                Check your spam folder or try again with a different email
+                address.
               </Text>
               {resetSent && (
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={ForgetPassword_Styles.resendButton}
                   onPress={() => {
                     setResetSent(false);
                   }}
                 >
-                  <Text style={ForgetPassword_Styles.resendText}>Try Again</Text>
+                  <Text style={ForgetPassword_Styles.resendText}>
+                    Try Again
+                  </Text>
                 </TouchableOpacity>
               )}
             </View>
