@@ -59,7 +59,7 @@ const QuranReading: React.FC = () => {
   const [showSurahModal, setShowSurahModal] = useState<boolean>(false);
   const [showTafsir, setShowTafsir] = useState<boolean>(false);
   const [currentTafsirVerse, setCurrentTafsirVerse] = useState<number | null>(null);
-  const [fontSize, setFontSize] = useState<number>(24); // For Arabic text
+  const [fontSize, setFontSize] = useState<number>(24);
   const [translationFontSize, setTranslationFontSize] = useState<number>(16);
 
   // Mock data - in a real app, this would come from an API or local storage

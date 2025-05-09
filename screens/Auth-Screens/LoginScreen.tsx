@@ -1,3 +1,4 @@
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -15,6 +16,12 @@ import { GlobalColors } from "../../constants/GlobalColors";
 import InputField from "../../components/Reusable-Components/InputField";
 import LinkButton from "../../components/Reusable-Components/LinkButton";
 import CustomButton from "../../components/Reusable-Components/LoginButton";
+
+
+interface LoginPropTypes{
+  emailAddress ?: string;
+  password ?: string;
+}
 
 const LoginScreen = () => {
   const [emailAddress, setEmailAddress] = useState<string>("");
