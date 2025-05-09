@@ -69,13 +69,13 @@ export const SignUp_Styles = StyleSheet.create({
     marginBottom: height * 0.02,
   },
   nameRow: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: 4,
   },
   nameField: {
-    width: '48%',
+    width: '100%',
   },
   inputWrapper: {
     width: '100%',

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { AuthStackParamList } from '../types';
 import LoginScreen from '../screens/Auth-Screens/Screens/LoginScreen';
 import SignUpScreen from '../screens/Auth-Screens/Screens/SignUpScreen';
 import ForgotPassword from '../screens/Auth-Screens/Screens/ForgetPassword';
 import SplashScreen from '../screens/Auth-Screens/Screens/SplashScreen';
-import { AuthStackParamList } from '../types';
 
 // Create a Stack Navigator
 const Stack = createStackNavigator<AuthStackParamList>();
@@ -30,7 +30,7 @@ const AuthNavigator = () => {
         headerShown: false
       }}/>
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{
-        headerShown: false
+         headerShown: false
       }}/>
     </Stack.Navigator>
   );

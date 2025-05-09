@@ -238,7 +238,7 @@ const SignUpScreen: React.FC = () => {
               <LinkButton
                 preText="Already have an account? "
                 linkText="Sign In"
-                onPress={() => console.log('Navigate to login')}
+                onPress={() => navigation.goBack()}
                 containerStyle={SignUp_Styles.loginContainer}
               />
             </View>
