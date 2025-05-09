@@ -8,18 +8,14 @@ import HomePage from "./screens/Main-Screens/Homepage";
 import QuranReading from "./screens/Main-Screens/QuranReading";
 import Memorization from './screens/Main-Screens/Memorization';
 import ForgotPassword from './screens/Auth-Screens/ForgetPassword';
+import { NavigationContainer } from '@react-navigation/native';
+import AuthNavigator from './navigation/AuthNavigator';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/* <LoginScreen/> */}
-      <SignUpScreen/>
-      {/* <ForgotPassword/> */}
-      {/* <HomePage/> */}
-      {/* <QuranReading/> */}
-      {/* <Memorization/> */}
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <AuthNavigator/>
+    </NavigationContainer>
   );
 }
 

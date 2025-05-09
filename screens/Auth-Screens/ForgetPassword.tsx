@@ -13,14 +13,21 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { GlobalColors } from "../../constants/GlobalColors";
+import { AuthStackParamList } from "../../types";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
 import InputField from "../../components/Reusable-Components/InputField";
 import LinkButton from "../../components/Reusable-Components/LinkButton";
 import AuthButton from "../../components/Reusable-Components/AuthButton";
+
+type AuthStackNavProp = StackNavigationProp<AuthStackParamList, "Login">;
 
 const ForgotPassword = () => {
   const [emailAddress, setEmailAddress] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [resetSent, setResetSent] = useState<boolean>(false);
+    const navigation = useNavigation<AuthStackNavProp>();
+
 
   const handleResetPassword = () => {
     if (!emailAddress) return;
@@ -29,6 +36,7 @@ const ForgotPassword = () => {
       console.log("Password reset request for:", emailAddress);
       setIsLoading(false);
       setResetSent(true);
+      navigation.navigate('Login')
     }, 1500);
   };
 

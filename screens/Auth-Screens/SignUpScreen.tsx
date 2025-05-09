@@ -12,9 +12,15 @@ import {
   Alert
 } from 'react-native';
 import { GlobalColors } from '../../constants/GlobalColors';
+import { AuthStackParamList } from "../../types";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
+import { validateEmail } from '../../helper/validators';
 import InputField from '../../components/Reusable-Components/InputField';
 import LinkButton from '../../components/Reusable-Components/LinkButton';
 import AuthButton from '../../components/Reusable-Components/AuthButton';
+
+type AuthStackNavProp = StackNavigationProp<AuthStackParamList, "Login">;
 
 interface FormData {
   firstName: string;
@@ -40,14 +46,10 @@ const SignUpScreen: React.FC = () => {
     password: '',
     confirmPassword: ''
   });
-  
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  const navigation = useNavigation<AuthStackNavProp>();
+
   
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -95,6 +97,7 @@ const SignUpScreen: React.FC = () => {
         console.log('Sign Up with:', formData);
         setIsLoading(false);
         Alert.alert('Success', 'Account created successfully!');
+        navigation.navigate('Login')
       }, 1500);
     }
   };
