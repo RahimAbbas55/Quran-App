@@ -1,15 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import {
-  StyleSheet,
   View,
   Text,
   Animated,
-  Dimensions,
   SafeAreaView,
-  Platform,
-  StatusBar,
 } from 'react-native';
-import { GlobalColors } from '../../constants/GlobalColors';
+import { Splash_Styles } from '../Styles/SplashScreen.Styles';
 
 type SplashScreenProps = {
   onComplete: () => void;
@@ -58,35 +54,35 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   }, [fadeAnim, scaleAnim, logoScaleAnim, textTranslateY, onComplete]);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={Splash_Styles.safeArea}>
       <Animated.View 
         style={[
-          styles.container,
+          Splash_Styles.container,
           {
             opacity: fadeAnim,
             transform: [{ scale: scaleAnim }],
           }
         ]}
       >
-        <View style={styles.contentContainer}>
+        <View style={Splash_Styles.contentContainer}>
           {/* Logo */}
           <Animated.View 
             style={[
-              styles.logoContainer,
+              Splash_Styles.logoContainer,
               {
                 transform: [{ scale: logoScaleAnim }],
               }
             ]}
           >
-            <View style={styles.logo}>
-              <Text style={styles.logoText}>Logo</Text>
+            <View style={Splash_Styles.logo}>
+              <Text style={Splash_Styles.logoText}>Logo</Text>
             </View>
           </Animated.View>
           
           {/* App name */}
-          <View style={styles.appNameContainer}>
-            <Text style={styles.appName}>
-              App<Text style={styles.accentText}>Name</Text>
+          <View style={Splash_Styles.appNameContainer}>
+            <Text style={Splash_Styles.appName}>
+              App<Text style={Splash_Styles.accentText}>Name</Text>
             </Text>
           </View>
           
@@ -97,87 +93,16 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
               opacity: fadeAnim,
             }}
           >
-            <Text style={styles.tagline}>Your perfect companion</Text>
+            <Text style={Splash_Styles.tagline}>Your perfect companion</Text>
           </Animated.View>
         </View>
         
         {/* Bottom branding */}
-        <View style={styles.bottomContainer}>
-          <Text style={styles.bottomText}>© 2025 Company Name</Text>
+        <View style={Splash_Styles.bottomContainer}>
+          <Text style={Splash_Styles.bottomText}>© 2025 Company Name</Text>
         </View>
       </Animated.View>
     </SafeAreaView>
   );
 };
-
-const { width, height } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    backgroundColor: GlobalColors.neutralTone,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: GlobalColors.neutralTone,
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoContainer: {
-    marginBottom: height * 0.02,
-  },
-  logo: {
-    backgroundColor: GlobalColors.softGreen,
-    width: 100,
-    height: 100,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 10,
-  },
-  logoText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 24,
-  },
-  appNameContainer: {
-    marginVertical: height * 0.02,
-  },
-  appName: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  accentText: {
-    color: GlobalColors.softGreen,
-  },
-  tagline: {
-    fontSize: 16,
-    color: '#757575',
-    marginTop: 8,
-  },
-  bottomContainer: {
-    position: 'absolute',
-    bottom: 40,
-    alignItems: 'center',
-  },
-  bottomText: {
-    fontSize: 14,
-    color: '#919191',
-  },
-});
-
 export default SplashScreen;

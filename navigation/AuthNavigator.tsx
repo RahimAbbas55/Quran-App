@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from '../screens/Auth-Screens/LoginScreen';
-import SignUpScreen from '../screens/Auth-Screens/SignUpScreen';
-import ForgotPassword from '../screens/Auth-Screens/ForgetPassword';
-import SplashScreen from '../screens/Auth-Screens/SplashScreen';
+import LoginScreen from '../screens/Auth-Screens/Screens/LoginScreen';
+import SignUpScreen from '../screens/Auth-Screens/Screens/SignUpScreen';
+import ForgotPassword from '../screens/Auth-Screens/Screens/ForgetPassword';
+import SplashScreen from '../screens/Auth-Screens/Screens/SplashScreen';
 import { AuthStackParamList } from '../types';
 
 // Create a Stack Navigator

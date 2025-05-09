@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   SafeAreaView,
   Platform,
-  StatusBar,
-  Dimensions,
   KeyboardAvoidingView,
   ScrollView,
   Alert
 } from 'react-native';
-import { GlobalColors } from '../../constants/GlobalColors';
-import { AuthStackParamList } from "../../types";
+import { AuthStackParamList } from "../../../types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
-import { validateEmail } from '../../helper/validators';
-import InputField from '../../components/Reusable-Components/InputField';
-import LinkButton from '../../components/Reusable-Components/LinkButton';
-import AuthButton from '../../components/Reusable-Components/AuthButton';
+import { SignUp_Styles } from '../Styles/SignUpScreen.styles';
+import { validateEmail } from '../../../helper/validators';
+import InputField from '../../../components/Reusable-Components/InputField';
+import LinkButton from '../../../components/Reusable-Components/LinkButton';
+import AuthButton from '../../../components/Reusable-Components/AuthButton';
 
 type AuthStackNavProp = StackNavigationProp<AuthStackParamList, "Login">;
 
@@ -118,38 +115,38 @@ const SignUpScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={SignUp_Styles.safeArea}>
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardAvoid}
+        style={SignUp_Styles.keyboardAvoid}
       >
         <ScrollView 
-          contentContainerStyle={styles.scrollContainer}
+          contentContainerStyle={SignUp_Styles.scrollContainer}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.container}>
+          <View style={SignUp_Styles.container}>
             {/* Logo */}
-            <View style={styles.logoContainer}>
-              <View style={styles.logo}>
-                <Text style={styles.logoText}>Logo</Text>
+            <View style={SignUp_Styles.logoContainer}>
+              <View style={SignUp_Styles.logo}>
+                <Text style={SignUp_Styles.logoText}>Logo</Text>
               </View>
             </View>
             
             {/* Welcome Text */}
-            <View style={styles.textBlock}>
-              <Text style={styles.greetingText}>Hello!</Text>
-              <Text style={styles.welcomeText}>
-                Create <Text style={styles.accentText}>Account</Text>
+            <View style={SignUp_Styles.textBlock}>
+              <Text style={SignUp_Styles.greetingText}>Hello!</Text>
+              <Text style={SignUp_Styles.welcomeText}>
+                Create <Text style={SignUp_Styles.accentText}>Account</Text>
               </Text>
-              <Text style={styles.subtitleText}>Sign up to get started</Text>
+              <Text style={SignUp_Styles.subtitleText}>Sign up to get started</Text>
             </View>
             
             {/* Form Container */}
-            <View style={styles.formContainer}>
+            <View style={SignUp_Styles.formContainer}>
               {/* First and Last Name Row */}
-              <View style={styles.nameRow}>
-                <View style={styles.nameField}>
-                  <Text style={styles.inputLabel}>First Name</Text>
+              <View style={SignUp_Styles.nameRow}>
+                <View style={SignUp_Styles.nameField}>
+                  <Text style={SignUp_Styles.inputLabel}>First Name</Text>
                   <InputField
                     placeholder="Enter your first name"
                     value={formData.firstName}
@@ -158,12 +155,12 @@ const SignUpScreen: React.FC = () => {
                     error={errors.firstName}
                   />
                   {errors.firstName && (
-                    <Text style={styles.errorText}>{errors.firstName}</Text>
+                    <Text style={SignUp_Styles.errorText}>{errors.firstName}</Text>
                   )}
                 </View>
                 
-                <View style={styles.nameField}>
-                  <Text style={styles.inputLabel}>Last Name</Text>
+                <View style={SignUp_Styles.nameField}>
+                  <Text style={SignUp_Styles.inputLabel}>Last Name</Text>
                   <InputField
                     placeholder="Enter your last name"
                     value={formData.lastName}
@@ -172,14 +169,14 @@ const SignUpScreen: React.FC = () => {
                     error={errors.lastName}
                   />
                   {errors.lastName && (
-                    <Text style={styles.errorText}>{errors.lastName}</Text>
+                    <Text style={SignUp_Styles.errorText}>{errors.lastName}</Text>
                   )}
                 </View>
               </View>
               
               {/* Email */}
-              <View style={styles.inputWrapper}>
-                <Text style={styles.inputLabel}>Email</Text>
+              <View style={SignUp_Styles.inputWrapper}>
+                <Text style={SignUp_Styles.inputLabel}>Email</Text>
                 <InputField
                   placeholder="Enter your email address"
                   value={formData.email}
@@ -189,13 +186,13 @@ const SignUpScreen: React.FC = () => {
                   error={errors.email}
                 />
                 {errors.email && (
-                  <Text style={styles.errorText}>{errors.email}</Text>
+                  <Text style={SignUp_Styles.errorText}>{errors.email}</Text>
                 )}
               </View>
               
               {/* Password */}
-              <View style={styles.inputWrapper}>
-                <Text style={styles.inputLabel}>Password</Text>
+              <View style={SignUp_Styles.inputWrapper}>
+                <Text style={SignUp_Styles.inputLabel}>Password</Text>
                 <InputField
                   placeholder="Create a password"
                   value={formData.password}
@@ -205,13 +202,13 @@ const SignUpScreen: React.FC = () => {
                   error={errors.password}
                 />
                 {errors.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
+                  <Text style={SignUp_Styles.errorText}>{errors.password}</Text>
                 )}
               </View>
               
               {/* Confirm Password */}
-              <View style={styles.inputWrapper}>
-                <Text style={styles.inputLabel}>Confirm Password</Text>
+              <View style={SignUp_Styles.inputWrapper}>
+                <Text style={SignUp_Styles.inputLabel}>Confirm Password</Text>
                 <InputField
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
@@ -221,16 +218,16 @@ const SignUpScreen: React.FC = () => {
                   error={errors.confirmPassword}
                 />
                 {errors.confirmPassword && (
-                  <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+                  <Text style={SignUp_Styles.errorText}>{errors.confirmPassword}</Text>
                 )}
               </View>
               
               {/* Terms and Conditions */}
-              <View style={styles.termsContainer}>
-                <Text style={styles.termsText}>
+              <View style={SignUp_Styles.termsContainer}>
+                <Text style={SignUp_Styles.termsText}>
                   By signing up, you agree to our{' '}
-                  <Text style={styles.termsLink}>Terms of Service</Text> and{' '}
-                  <Text style={styles.termsLink}>Privacy Policy</Text>
+                  <Text style={SignUp_Styles.termsLink}>Terms of Service</Text> and{' '}
+                  <Text style={SignUp_Styles.termsLink}>Privacy Policy</Text>
                 </Text>
               </View>
               
@@ -242,7 +239,7 @@ const SignUpScreen: React.FC = () => {
                 preText="Already have an account? "
                 linkText="Sign In"
                 onPress={() => console.log('Navigate to login')}
-                containerStyle={styles.loginContainer}
+                containerStyle={SignUp_Styles.loginContainer}
               />
             </View>
           </View>
@@ -251,133 +248,5 @@ const SignUpScreen: React.FC = () => {
     </SafeAreaView>
   );
 };
-
-const { width, height } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    backgroundColor: GlobalColors.neutralTone,
-  },
-  keyboardAvoid: {
-    flex: 1,
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: width * 0.06,
-    paddingVertical: height * 0.02,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoContainer: {
-    alignItems: 'center',
-    marginBottom: height * 0.02,
-    marginTop: height * 0.02,
-  },
-  logo: {
-    backgroundColor: GlobalColors.softGreen,
-    width: 70,
-    height: 70,
-    borderRadius: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  textBlock: {
-    alignSelf: 'flex-start',
-    width: '100%',
-    marginBottom: height * 0.02,
-  },
-  greetingText: {
-    fontSize: 28,
-    fontWeight: '600',
-    color: '#333',
-  },
-  welcomeText: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#333',
-    marginTop: -5,
-  },
-  accentText: {
-    color: GlobalColors.softGreen,
-  },
-  subtitleText: {
-    color: '#757575',
-    marginTop: 8,
-    fontSize: 16,
-  },
-  formContainer: {
-    width: '100%',
-    marginBottom: height * 0.02,
-  },
-  nameRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginBottom: 4,
-  },
-  nameField: {
-    width: '48%',
-  },
-  inputWrapper: {
-    width: '100%',
-    marginBottom: 4,
-  },
-  inputLabel: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginBottom: 8,
-    marginLeft: 4,
-    color: '#333',
-  },
-  errorText: {
-    color: '#D32F2F',
-    fontSize: 12,
-    marginLeft: 4,
-    marginTop: 4,
-  },
-  termsContainer: {
-    width: '100%',
-    marginVertical: 15,
-  },
-  termsText: {
-    color: '#757575',
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  termsLink: {
-    color: GlobalColors.softGreen,
-    fontWeight: '500',
-  },
-  signUpButton: {
-    width: '100%',
-    height: 56,
-    borderRadius: 12,
-    backgroundColor: GlobalColors.softGreen,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 15,
-  },
-  signUpButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  loginContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10,
-  },
-});
 
 export default SignUpScreen;
