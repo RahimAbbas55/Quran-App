@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
   SafeAreaView,
   Platform,
   StatusBar,
@@ -15,6 +14,7 @@ import {
 import { GlobalColors } from '../../constants/GlobalColors';
 import InputField from '../../components/Reusable-Components/InputField';
 import LinkButton from '../../components/Reusable-Components/LinkButton';
+import AuthButton from '../../components/Reusable-Components/AuthButton';
 
 interface FormData {
   firstName: string;
@@ -232,16 +232,7 @@ const SignUpScreen: React.FC = () => {
               </View>
               
               {/* Sign Up Button */}
-              <TouchableOpacity 
-                style={styles.signUpButton} 
-                onPress={handleSignUp}
-                activeOpacity={0.8}
-                disabled={isLoading}
-              >
-                <Text style={styles.signUpButtonText}>
-                  {isLoading ? 'Creating Account...' : 'Sign Up'}
-                </Text>
-              </TouchableOpacity>
+              <AuthButton onPress={handleSignUp} isLoading={isLoading} buttonText={"Sign Up"}/>
               
               {/* Login option */}
               <LinkButton

@@ -8,9 +8,10 @@ interface CustomButtonProps{
     onPress : () => void;
     style?: ViewStyle | TextStyle;
     isLoading : boolean;
+    buttonText ?: string
 }
 
-const CustomButton : React.FC<CustomButtonProps> = ({  onPress , style , isLoading}) => {
+const AuthButton : React.FC<CustomButtonProps> = ({  onPress , style , isLoading , buttonText}) => {
     return(
         <TouchableOpacity 
                        style={styles.loginButton} 
@@ -19,7 +20,7 @@ const CustomButton : React.FC<CustomButtonProps> = ({  onPress , style , isLoadi
                        disabled={isLoading}
                      >
                        <Text style={styles.loginButtonText}>
-                         {isLoading ? 'Signing in...' : 'Sign In'}
+                         {buttonText}
                        </Text>
                      </TouchableOpacity>
     )
@@ -42,4 +43,4 @@ loginButton: {
   },
 })
 
-export default CustomButton
+export default AuthButton;

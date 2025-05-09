@@ -17,17 +17,18 @@ import InputField from "../../components/Reusable-Components/InputField";
 import LinkButton from "../../components/Reusable-Components/LinkButton";
 import AuthButton from "../../components/Reusable-Components/AuthButton";
 
-const LoginScreen = () => {
+const ForgotPassword = () => {
   const [emailAddress, setEmailAddress] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [resetSent, setResetSent] = useState<boolean>(false);
 
-  const handleLogin = () => {
-    if (!emailAddress || !password) return;
+  const handleResetPassword = () => {
+    if (!emailAddress) return;
     setIsLoading(true);
     setTimeout(() => {
-      console.log("Login attempt with:", emailAddress);
+      console.log("Password reset request for:", emailAddress);
       setIsLoading(false);
+      setResetSent(true);
     }, 1500);
   };
 
@@ -49,20 +50,19 @@ const LoginScreen = () => {
               </View>
             </View>
 
-            {/* Welcome message block */}
+            {/* Title and message block */}
             <View style={styles.textBlock}>
-              <Text style={styles.greetingText}>Hey,</Text>
-              <Text style={styles.welcomeText}>
-                Welcome <Text style={styles.accentText}>Back</Text>
+              <Text style={styles.titleText}>
+                Forgot <Text style={styles.accentText}>Password?</Text>
               </Text>
               <Text style={styles.subtitleText}>
-                Sign in to continue to your account
+                Enter your email and we'll send you instructions to reset your password
               </Text>
             </View>
 
             {/* Form Container */}
             <View style={styles.formContainer}>
-              {/* Input fields Block */}
+              {/* Input field Block */}
               <View style={styles.inputWrapper}>
                 <Text style={styles.inputLabel}>Email</Text>
                 <InputField
@@ -72,54 +72,51 @@ const LoginScreen = () => {
                   keyboardType="email-address"
                   onChangeText={(text: string) => setEmailAddress(text)}
                 />
-
-                <Text style={styles.inputLabel}>Password</Text>
-                <InputField
-                  placeholder="Enter your password"
-                  value={password}
-                  icon_name="lock-closed-outline"
-                  isPasswordField={true}
-                  onChangeText={(text: string) => setPassword(text)}
-                />
-
-                <LinkButton
-                  preText="                                    "
-                  linkText="Forgot Password?"
-                  onPress={() => console.log("Navigate to signup")}
-                  containerStyle={styles.signupContainer}
-                  preTextStyle={styles.signupText}
-                  linkTextStyle={styles.signupLink}
-                />
               </View>
 
-              {/* Login Button */}
-              <AuthButton onPress={handleLogin} isLoading={isLoading} buttonText={"Login In"}/>
+              {/* Reset Password Button */}
+              <AuthButton 
+                onPress={handleResetPassword} 
+                isLoading={isLoading}
+                buttonText={resetSent ? "Email Sent" : "Send Reset Link"}
+              />
 
-              {/* Sign up option */}
+              {/* Success message */}
+              {resetSent && (
+                <View style={styles.successContainer}>
+                  <Text style={styles.successText}>
+                    We've sent you an email with instructions to reset your password.
+                  </Text>
+                </View>
+              )}
+
+              {/* Back to login option */}
               <LinkButton
-                preText="Don't have an account? "
-                linkText="Sign Up"
-                onPress={() => console.log("Navigate to signup")}
-                containerStyle={styles.signupContainer}
-                preTextStyle={styles.signupText}
-                linkTextStyle={styles.signupLink}
+                preText="Remember your password? "
+                linkText="Login"
+                onPress={() => console.log("Navigate to login")}
+                containerStyle={styles.loginContainer}
+                preTextStyle={styles.loginText}
+                linkTextStyle={styles.loginLink}
               />
             </View>
 
-            {/* Social login options */}
-            <View style={styles.socialLoginContainer}>
-              <Text style={styles.orText}>Or sign in with</Text>
-              <View style={styles.socialButtonsRow}>
-                <TouchableOpacity style={styles.socialButton}>
-                  <Text style={styles.socialButtonText}>G</Text>
+            {/* Instructions */}
+            <View style={styles.instructionsContainer}>
+              <Text style={styles.instructionsTitle}>Didn't receive the email?</Text>
+              <Text style={styles.instructionsText}>
+                Check your spam folder or try again with a different email address.
+              </Text>
+              {resetSent && (
+                <TouchableOpacity 
+                  style={styles.resendButton}
+                  onPress={() => {
+                    setResetSent(false);
+                  }}
+                >
+                  <Text style={styles.resendText}>Try Again</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.socialButton}>
-                  <Text style={styles.socialButtonText}>f</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.socialButton}>
-                  <Text style={styles.socialButtonText}>in</Text>
-                </TouchableOpacity>
-              </View>
+              )}
             </View>
           </View>
         </ScrollView>
@@ -173,16 +170,10 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: height * 0.03,
   },
-  greetingText: {
-    fontSize: 28,
-    fontWeight: "600",
-    color: "#333",
-  },
-  welcomeText: {
+  titleText: {
     fontSize: 36,
     fontWeight: "bold",
     color: "#333",
-    marginTop: -5,
   },
   accentText: {
     color: GlobalColors.softGreen,
@@ -191,6 +182,7 @@ const styles = StyleSheet.create({
     color: "#757575",
     marginTop: 8,
     fontSize: 16,
+    lineHeight: 22,
   },
   formContainer: {
     width: "100%",
@@ -207,69 +199,65 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     color: "#333",
   },
-  forgetPassStyle: {
-    alignSelf: "flex-end",
-    marginTop: 12,
-    marginRight: 4,
+  successContainer: {
+    backgroundColor: "rgba(76, 175, 80, 0.1)",
+    borderRadius: 8,
+    padding: 12,
+    marginTop: 16,
+    borderLeftWidth: 4,
+    borderLeftColor: GlobalColors.softGreen,
   },
-  loginButton: {
-    width: "100%",
-    height: 56,
-    borderRadius: 12,
-    backgroundColor: GlobalColors.blue,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: height * 0.01,
-    marginBottom: height * 0.02,
+  successText: {
+    color: "#4CAF50",
+    fontSize: 14,
+    lineHeight: 20,
   },
-  loginButtonText: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  signupContainer: {
+  loginContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: height * 0.01,
+    marginTop: height * 0.03,
   },
-  signupText: {
+  loginText: {
     color: "#757575",
     fontSize: 16,
   },
-  signupLink: {
+  loginLink: {
     color: GlobalColors.softGreen,
     fontWeight: "bold",
     fontSize: 16,
   },
-  socialLoginContainer: {
+  instructionsContainer: {
     width: "100%",
     alignItems: "center",
-    marginTop: height * 0.03,
+    marginTop: height * 0.04,
+    padding: 16,
+    backgroundColor: "#f5f5f5",
+    borderRadius: 12,
   },
-  orText: {
-    color: "#757575",
-    marginBottom: height * 0.02,
-  },
-  socialButtonsRow: {
-    flexDirection: "row",
-    justifyContent: "center",
-    width: "100%",
-  },
-  socialButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "#e0e0e0",
-  },
-  socialButtonText: {
+  instructionsTitle: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: "600",
+    color: "#333",
+    marginBottom: 8,
+  },
+  instructionsText: {
+    fontSize: 14,
+    color: "#757575",
+    textAlign: "center",
+    lineHeight: 20,
+  },
+  resendButton: {
+    marginTop: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
+  },
+  resendText: {
+    color: GlobalColors.softGreen,
+    fontWeight: "600",
+    fontSize: 14,
   },
 });
 
-export default LoginScreen;
+export default ForgotPassword;

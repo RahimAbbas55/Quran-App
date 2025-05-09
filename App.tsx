@@ -7,15 +7,17 @@ import SignUpScreen from "./screens/Auth-Screens/SignUpScreen";
 import HomePage from "./screens/Main-Screens/Homepage";
 import QuranReading from "./screens/Main-Screens/QuranReading";
 import Memorization from './screens/Main-Screens/Memorization';
+import ForgotPassword from './screens/Auth-Screens/ForgetPassword';
 
 export default function App() {
   return (
     <View style={styles.container}>
       {/* <LoginScreen/> */}
-      {/* <SignUpScreen/> */}
+      <SignUpScreen/>
+      {/* <ForgotPassword/> */}
       {/* <HomePage/> */}
       {/* <QuranReading/> */}
-      <Memorization/>
+      {/* <Memorization/> */}
       <StatusBar style="auto" />
     </View>
   );
