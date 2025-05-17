@@ -99,7 +99,7 @@ const SignUpScreen: React.FC = () => {
       Alert.alert("Success", "Account created successfully!");
     }, 1500);
 
-    showToast('success' , 'Sign Up Successful!' , 'You have successfully signed up.')
+    showToast('success' , 'Sign Up Successful!' , 'Please verify your account to continue .')
 
     // Navigation
     // navigation.navigate("Login");
