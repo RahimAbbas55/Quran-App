@@ -16,6 +16,7 @@ import { ForgetPassword_Styles } from "../Styles/ForgetPassword.styles";
 import InputField from "../../../components/Reusable-Components/InputField";
 import LinkButton from "../../../components/Reusable-Components/LinkButton";
 import AuthButton from "../../../components/Reusable-Components/AuthButton";
+import { showToast } from "../../../helper/toastUtilis";
 
 type AuthStackNavProp = StackNavigationProp<AuthStackParamList, "Login">;
 
@@ -26,14 +27,21 @@ const ForgotPassword = () => {
   const navigation = useNavigation<AuthStackNavProp>();
 
   const handleResetPassword = () => {
-    if (!emailAddress) return;
+    if (!emailAddress){
+      showToast('error' , 'Email Required!' , 'Please enter your email address.')
+      return;
+    }
     setIsLoading(true);
     setTimeout(() => {
       console.log("Password reset request for:", emailAddress);
       setIsLoading(false);
       setResetSent(true);
-      navigation.goBack();
     }, 1500);
+
+    showToast('success' , 'Reset Request Sent' , 'Please check your inbox.')
+
+    //Navigation
+    //navigation.goBack();
   };
 
   return (
@@ -86,16 +94,6 @@ const ForgotPassword = () => {
                 isLoading={isLoading}
                 buttonText={resetSent ? "Email Sent" : "Send Reset Link"}
               />
-
-              {/* Success message */}
-              {resetSent && (
-                <View style={ForgetPassword_Styles.successContainer}>
-                  <Text style={ForgetPassword_Styles.successText}>
-                    We've sent you an email with instructions to reset your
-                    password.
-                  </Text>
-                </View>
-              )}
 
               {/* Back to login option */}
               <LinkButton

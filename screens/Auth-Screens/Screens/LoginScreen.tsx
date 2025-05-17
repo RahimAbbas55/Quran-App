@@ -13,9 +13,11 @@ import { AuthStackParamList } from "../../../Types/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { Login_Styles } from "../Styles/LoginScreen.styles";
+import Toast from "react-native-toast-message";
 import InputField from "../../../components/Reusable-Components/InputField";
 import LinkButton from "../../../components/Reusable-Components/LinkButton";
 import AuthButton from "../../../components/Reusable-Components/AuthButton";
+import { showToast } from "../../../helper/toastUtilis";
 
 type AuthStackNavProp = StackNavigationProp<AuthStackParamList, "Login">;
 
@@ -26,12 +28,20 @@ const LoginScreen = () => {
   const navigation = useNavigation<AuthStackNavProp>();
 
   const handleLogin = () => {
-    if (!emailAddress || !password) return;
+    if (!emailAddress || !password){
+      showToast('error', 'Error!', 'Please provide your email and password.');
+      return;
+    }
+    // Add validation when implementing backend
+
     setIsLoading(true);
     setTimeout(() => {
       console.log("Login attempt with:", emailAddress);
       setIsLoading(false);
     }, 1500);
+
+    showToast("success", "Login Successful!", "Redirecting....");
+
     //navigate
     // navigation.navigate('SignUp')
   };
@@ -90,7 +100,7 @@ const LoginScreen = () => {
                 <LinkButton
                   preText="                                    "
                   linkText="Forgot Password?"
-                  onPress={() => navigation.navigate('ForgotPassword')}
+                  onPress={() => navigation.navigate("ForgotPassword")}
                   containerStyle={Login_Styles.signupContainer}
                   preTextStyle={Login_Styles.signupText}
                   linkTextStyle={Login_Styles.signupLink}
@@ -98,13 +108,17 @@ const LoginScreen = () => {
               </View>
 
               {/* Login Button */}
-              <AuthButton onPress={handleLogin} isLoading={isLoading} buttonText={"Login In"}/>
+              <AuthButton
+                onPress={handleLogin}
+                isLoading={isLoading}
+                buttonText={"Login In"}
+              />
 
               {/* Sign up option */}
               <LinkButton
                 preText="Don't have an account? "
                 linkText="Sign Up"
-                onPress={() => navigation.navigate('SignUp')}
+                onPress={() => navigation.navigate("SignUp")}
                 containerStyle={Login_Styles.signupContainer}
                 preTextStyle={Login_Styles.signupText}
                 linkTextStyle={Login_Styles.signupLink}

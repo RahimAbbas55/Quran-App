@@ -12,10 +12,11 @@ import { AuthStackParamList } from "../../../Types/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { SignUp_Styles } from "../Styles/SignUpScreen.styles";
-import { validateEmail } from "../../../helper/helper";
+import { validateEmail, validatePassword } from "../../../helper/validators";
 import InputField from "../../../components/Reusable-Components/InputField";
 import LinkButton from "../../../components/Reusable-Components/LinkButton";
 import AuthButton from "../../../components/Reusable-Components/AuthButton";
+import { showToast } from "../../../helper/toastUtilis";
 
 type AuthStackNavProp = StackNavigationProp<AuthStackParamList, "Login">;
 
@@ -68,10 +69,11 @@ const SignUpScreen: React.FC = () => {
     }
 
     // Validate password
+    const passwordValidation = validatePassword(formData.password);
     if (!formData.password) {
       newErrors.password = "Password is required";
-    } else if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+    } else if (!passwordValidation.valid) {
+      newErrors.password = passwordValidation.error;
     }
 
     // Validate confirm password
@@ -87,15 +89,20 @@ const SignUpScreen: React.FC = () => {
 
   const handleSignUp = (): void => {
     if (!validateForm()) {
-      setIsLoading(true);
-      // Simulate API call
-      setTimeout(() => {
-        console.log("Sign Up with:", formData);
-        setIsLoading(false);
-        Alert.alert("Success", "Account created successfully!");
-      }, 1500);
-      navigation.navigate("Login");
+      return;
     }
+    setIsLoading(true);
+    // Simulate API call
+    setTimeout(() => {
+      console.log("Sign Up with:", formData);
+      setIsLoading(false);
+      Alert.alert("Success", "Account created successfully!");
+    }, 1500);
+
+    showToast('success' , 'Sign Up Successful!' , 'You have successfully signed up.')
+
+    // Navigation
+    // navigation.navigate("Login");
   };
 
   const handleInputChange = (field: keyof FormData, value: string): void => {
