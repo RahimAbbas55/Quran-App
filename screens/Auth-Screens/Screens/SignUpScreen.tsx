@@ -112,19 +112,23 @@ const SignUpScreen: React.FC = () => {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
-        isVerified: false,
         createdAt: new Date(),
       });
 
       // Send email verification
-      // await sendEmailVerification(user);
+      await sendEmailVerification(user);
+
+
       showToast(
         "success",
         "Sign Up Successful!",
         "Please verify your email to continue."
       );
 
-      navigation.navigate("Login");
+      setTimeout(() => {
+        navigation.navigate("Login");
+      } , 3000);
+      
     } catch (error: any) {
       const errorCode = error.code;
 
