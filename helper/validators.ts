@@ -30,11 +30,5 @@ export function validatePassword(password: string): {
   if (!/[0-9]/.test(password)) {
     return { valid: false, error: "Password must contain at least one digit." };
   }
-  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-    return {
-      valid: false,
-      error: "Password must contain at least one special character.",
-    };
-  }
   return { valid: true };
 }

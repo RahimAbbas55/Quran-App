@@ -34,12 +34,6 @@ const LoginScreen = () => {
     }
     // Add validation when implementing backend
 
-    setIsLoading(true);
-    setTimeout(() => {
-      console.log("Login attempt with:", emailAddress);
-      setIsLoading(false);
-    }, 1500);
-
     showToast("success", "Login Successful!", "Redirecting....");
 
     //navigate

@@ -12,15 +12,15 @@ import toastConfig from "./components/Config/toastConfig";
 export default function App() {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <AuthNavigator />
-      </NavigationContainer>
-      <Toast
-        config={toastConfig}
-        position="top"
-        visibilityTime={3000}
-        autoHide
-      />
+        <NavigationContainer>
+          <AuthNavigator />
+        </NavigationContainer>
+        <Toast
+          config={toastConfig}
+          position="top"
+          visibilityTime={3000}
+          autoHide
+        />
     </SafeAreaProvider>
   );
 }
