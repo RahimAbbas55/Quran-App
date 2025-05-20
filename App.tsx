@@ -1,26 +1,32 @@
+// Other Essential Imports
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-//Navigaters Imports
-import AuthNavigator from "./navigation/AuthNavigator";
+// Context Imports
+import { AuthProvider } from "./context/AuthContext";
 
-//Import of toasts
+// Navigater Import
+import RootNavigator from "./navigation/RootNavigator";
+
+// Import of toasts
 import Toast from "react-native-toast-message";
 import toastConfig from "./components/Config/toastConfig";
 
 export default function App() {
   return (
     <SafeAreaProvider>
+      <AuthProvider>
         <NavigationContainer>
-          <AuthNavigator />
+          <RootNavigator />
         </NavigationContainer>
-        <Toast
-          config={toastConfig}
-          position="top"
-          visibilityTime={3000}
-          autoHide
-        />
+      </AuthProvider>
+      <Toast
+        config={toastConfig}
+        position="top"
+        visibilityTime={3000}
+        autoHide
+      />
     </SafeAreaProvider>
   );
 }

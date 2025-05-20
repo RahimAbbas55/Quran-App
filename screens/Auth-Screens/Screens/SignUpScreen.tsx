@@ -17,9 +17,11 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   sendEmailVerification,
+  signOut,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { authenticator , db } from "../../../data-service/firebase";
+import { auth, db } from "../../../data-service/firebase";
+import { useAuth } from "../../../context/AuthContext";
 import InputField from "../../../components/Reusable-Components/InputField";
 import LinkButton from "../../../components/Reusable-Components/LinkButton";
 import AuthButton from "../../../components/Reusable-Components/AuthButton";
@@ -52,6 +54,7 @@ const SignUpScreen: React.FC = () => {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { logout } = useAuth();
   const navigation = useNavigation<AuthStackNavProp>();
 
   const validateForm = (): boolean => {
@@ -89,18 +92,17 @@ const SignUpScreen: React.FC = () => {
   };
 
   const handleSignUp = async (): Promise<void> => {
-    if ( !validateForm() ){
-      console.log(errors)
+    if (!validateForm()) {
+      console.log(errors);
       return;
     }
     setIsLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
-        authenticator,
+        auth,
         formData.email,
         formData.password
       );
-
       const user = userCredential.user;
       // Update profile
       await updateProfile(user, {
@@ -118,20 +120,18 @@ const SignUpScreen: React.FC = () => {
       // Send email verification
       await sendEmailVerification(user);
 
+      await signOut(auth);
 
       showToast(
         "success",
         "Sign Up Successful!",
         "Please verify your email to continue."
       );
-
       setTimeout(() => {
         navigation.navigate("Login");
-      } , 3000);
-      
+      }, 3000);
     } catch (error: any) {
       const errorCode = error.code;
-
       if (errorCode === "auth/email-already-in-use") {
         showToast("error", "Sign Up Failed", "Email is already in use.");
       } else if (errorCode === "auth/invalid-email") {
@@ -141,10 +141,11 @@ const SignUpScreen: React.FC = () => {
       } else {
         showToast("error", "Sign Up Failed", "Please try again later.");
       }
-
       console.log("Sign up error:", error);
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleInputChange = (field: keyof FormData, value: string): void => {
     setFormData((prevState) => ({

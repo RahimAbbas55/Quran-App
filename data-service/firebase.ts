@@ -1,8 +1,9 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "@firebase/auth";
+// firebase.ts
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { initializeApp } from 'firebase/app';
+import { getAuth, initializeAuth, getReactNativePersistence } from '@firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
-// Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyC_UFBZZSoerpqyOwivaRkjkY-gOirF9l4",
   authDomain: "quran-app-8e607.firebaseapp.com",
@@ -13,7 +14,11 @@ const firebaseConfig = {
   measurementId: "G-2J22FXL4FV"
 };
 
-// Initialize app
-export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const authenticator = getAuth(app)
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app)
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
+// const auth = getAuth(app);
+
+export { app, auth , db };

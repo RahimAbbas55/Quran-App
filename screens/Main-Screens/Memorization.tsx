@@ -1,10 +1,10 @@
 import React from "react"
-import { View } from "react-native"
+import { Text, View } from "react-native"
 
 const Memorization = () => {
     return (
         <View>
-
+            <Text>Memorization</Text>
         </View>
     )
 }

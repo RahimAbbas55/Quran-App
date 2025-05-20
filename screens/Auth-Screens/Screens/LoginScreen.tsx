@@ -13,11 +13,12 @@ import { AuthStackParamList } from "../../../Types/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { Login_Styles } from "../Styles/LoginScreen.styles";
-import Toast from "react-native-toast-message";
+import { showToast } from "../../../helper/toastUtilis";
+import { auth } from "../../../data-service/firebase";
+import { signInWithEmailAndPassword } from "@firebase/auth";
 import InputField from "../../../components/Reusable-Components/InputField";
 import LinkButton from "../../../components/Reusable-Components/LinkButton";
 import AuthButton from "../../../components/Reusable-Components/AuthButton";
-import { showToast } from "../../../helper/toastUtilis";
 
 type AuthStackNavProp = StackNavigationProp<AuthStackParamList, "Login">;
 
@@ -27,18 +28,21 @@ const LoginScreen = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigation = useNavigation<AuthStackNavProp>();
 
-  const handleLogin = () => {
-    if (!emailAddress || !password){
-      showToast('error', 'Error!', 'Please provide your email and password.');
-      return;
-    }
-    // Add validation when implementing backend
-
-    showToast("success", "Login Successful!", "Redirecting....");
-
-    //navigate
-    // navigation.navigate('SignUp')
-  };
+  const handleLogin = async () => {
+  if (!emailAddress || !password) {
+    showToast('error', 'Error!', 'Please provide your email and password.');
+    return;
+  }
+  setIsLoading(true);
+  try {
+    await signInWithEmailAndPassword(auth, emailAddress, password);
+    showToast('success', 'Login Successful!', 'Redirecting...');
+  } catch (error: any) {
+    showToast('error', 'Login Failed', error.message || 'Something went wrong.');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <SafeAreaView style={Login_Styles.safeArea}>
