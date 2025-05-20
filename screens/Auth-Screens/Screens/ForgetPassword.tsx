@@ -9,14 +9,17 @@ import {
   ScrollView,
 } from "react-native";
 import { useState } from "react";
-import { AuthStackParamList } from "../../../Types/types";
+import { AuthStackParamList } from "../../../Types/NavigationTypes";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { ForgetPassword_Styles } from "../Styles/ForgetPassword.styles";
+import { showToast } from "../../../helper/toastUtilis";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../../../data-service/firebase";
+import { validateEmail } from "../../../helper/validators";
 import InputField from "../../../components/Reusable-Components/InputField";
 import LinkButton from "../../../components/Reusable-Components/LinkButton";
 import AuthButton from "../../../components/Reusable-Components/AuthButton";
-import { showToast } from "../../../helper/toastUtilis";
 
 type AuthStackNavProp = StackNavigationProp<AuthStackParamList, "Login">;
 
@@ -26,22 +29,48 @@ const ForgotPassword = () => {
   const [resetSent, setResetSent] = useState<boolean>(false);
   const navigation = useNavigation<AuthStackNavProp>();
 
-  const handleResetPassword = () => {
-    if (!emailAddress){
-      showToast('error' , 'Email Required!' , 'Please enter your email address.')
+  const handleResetPassword = async () => {
+    // Validate email input
+    if (!emailAddress) {
+      showToast('error', 'Email Required!', 'Please enter your email address.');
       return;
     }
+
+    if (!validateEmail(emailAddress)) {
+      showToast('error', 'Invalid Email', 'Please enter a valid email address.');
+      return;
+    }
+
     setIsLoading(true);
-    setTimeout(() => {
-      console.log("Password reset request for:", emailAddress);
+
+    try {
+      // Firebase password reset functionality
+      await sendPasswordResetEmail(auth, emailAddress);
+      
       setIsLoading(false);
       setResetSent(true);
-    }, 1500);
+      showToast('success', 'Reset Email Sent', 'Please check your inbox for password reset instructions.');
+      setTimeout(() => {
+        navigation.goBack();
+      } , 300)
+    } catch (error: any) {
+      setIsLoading(false);
+      if (error.code === 'auth/user-not-found') {
+        showToast('error', 'Account Not Found', 'No account exists with this email address.');
+      } else if (error.code === 'auth/invalid-email') {
+        showToast('error', 'Invalid Email', 'Please enter a valid email address.');
+      } else if (error.code === 'auth/too-many-requests') {
+        showToast('error', 'Too Many Attempts', 'Too many reset attempts. Please try again later.');
+      } else {
+        showToast('error', 'Reset Failed', 'Failed to send reset email. Please try again.');
+        console.error("Firebase password reset error:", error);
+      }
+    }
+  };
 
-    showToast('success' , 'Reset Request Sent' , 'Please check your inbox.')
-
-    //Navigation
-    //navigation.goBack();
+  const handleResendReset = () => {
+    setResetSent(false);
+    setEmailAddress(""); // Optional: Clear the email field for a fresh attempt
   };
 
   return (
@@ -99,7 +128,7 @@ const ForgotPassword = () => {
               <LinkButton
                 preText="Remember your password? "
                 linkText="Login"
-                onPress={() => console.log("Navigate to login")}
+                onPress={() => navigation.navigate("Login")}
                 containerStyle={ForgetPassword_Styles.loginContainer}
                 preTextStyle={ForgetPassword_Styles.loginText}
                 linkTextStyle={ForgetPassword_Styles.loginLink}
@@ -118,9 +147,7 @@ const ForgotPassword = () => {
               {resetSent && (
                 <TouchableOpacity
                   style={ForgetPassword_Styles.resendButton}
-                  onPress={() => {
-                    setResetSent(false);
-                  }}
+                  onPress={handleResendReset}
                 >
                   <Text style={ForgetPassword_Styles.resendText}>
                     Try Again

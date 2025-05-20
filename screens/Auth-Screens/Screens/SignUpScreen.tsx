@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
-import { AuthStackParamList } from "../../../Types/types";
+import { AuthStackParamList } from "../../../Types/NavigationTypes";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { SignUp_Styles } from "../Styles/SignUpScreen.styles";
@@ -22,27 +22,12 @@ import {
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../data-service/firebase";
 import { useAuth } from "../../../context/AuthContext";
+import { FormData, FormErrors } from "../../../Types/SignupFormTypes";
 import InputField from "../../../components/Reusable-Components/InputField";
 import LinkButton from "../../../components/Reusable-Components/LinkButton";
 import AuthButton from "../../../components/Reusable-Components/AuthButton";
 
 type AuthStackNavProp = StackNavigationProp<AuthStackParamList, "Login">;
-
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface FormErrors {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-}
 
 const SignUpScreen: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthStackParamList } from '../Types/types';
+import { AuthStackParamList } from '../Types/NavigationTypes';
 import LoginScreen from '../screens/Auth-Screens/Screens/LoginScreen';
 import SignUpScreen from '../screens/Auth-Screens/Screens/SignUpScreen';
 import ForgotPassword from '../screens/Auth-Screens/Screens/ForgetPassword';

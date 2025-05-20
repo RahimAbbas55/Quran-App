@@ -4,23 +4,9 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  KeyboardTypeOptions,
-  ViewStyle,
-  TextStyle
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Assuming you're using Expo
-
-interface InputFieldProps {
-  placeholder: string;
-  value: string;
-  icon_name: string;
-  onChangeText: (text: string) => void;
-  keyboardType?: KeyboardTypeOptions;
-  isPasswordField?: boolean;
-  error?: string;
-  containerStyle?: ViewStyle;
-  inputStyle?: TextStyle;
-}
+import { InputFieldProps } from '../../Types/UIPropsTypes';
 
 const InputField: React.FC<InputFieldProps> = ({
   placeholder,

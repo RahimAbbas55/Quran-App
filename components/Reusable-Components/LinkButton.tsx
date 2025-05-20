@@ -1,16 +1,9 @@
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle, GestureResponderEvent } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { View } from 'react-native';
 import { GlobalColors } from '../../constants/GlobalColors';
+import { LinkButtonProps } from '../../Types/UIPropsTypes';
 
-interface LinkButtonProps {
-  preText?: string;
-  linkText: string;
-  onPress: (event: GestureResponderEvent) => void;
-  containerStyle?: ViewStyle;
-  preTextStyle?: TextStyle;
-  linkTextStyle?: TextStyle;
-}
 const LinkButton: React.FC<LinkButtonProps> = ({ 
   preText, 
   linkText, 

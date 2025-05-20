@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { MainStackParamList } from "../Types/types";
+import { MainStackParamList } from "../Types/NavigationTypes";
 import Homepage from "../screens/Main-Screens/Homepage";
 import LearningPath from "../screens/Main-Screens/LearningPath";
 import AiBot from "../screens/Main-Screens/AiBot";

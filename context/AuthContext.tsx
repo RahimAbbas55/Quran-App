@@ -1,29 +1,23 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../data-service/firebase';
+import { AuthContextProps } from '../Types/AuthContextTypes';
 
-interface AuthContextProps {
-  user: User | null;
-  loading: boolean;
-  logout: () => Promise<void>;
-}
-
-interface Props {
-  children: ReactNode;
-}
-
+// Initializing the Auth Context
 const AuthContext = createContext<AuthContextProps>({
   user: null,
   loading: true,
   logout: async () => {},
 });
 
+// Hooking the AuthContext
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider: React.FC<Props> = ({ children }) => {
+export const AuthProvider: React.FC<{ children : React.ReactNode}> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Listner for checking if the user's email is verified
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser && firebaseUser.emailVerified) {
@@ -37,6 +31,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     return unsubscribe;
   }, []);
 
+  // Function to sign out the user
   const logout = async () => {
     await signOut(auth);
   };

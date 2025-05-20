@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useState } from "react";
-import { AuthStackParamList } from "../../../Types/types";
+import { AuthStackParamList } from "../../../Types/NavigationTypes";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { Login_Styles } from "../Styles/LoginScreen.styles";
@@ -29,20 +29,107 @@ const LoginScreen = () => {
   const navigation = useNavigation<AuthStackNavProp>();
 
   const handleLogin = async () => {
-  if (!emailAddress || !password) {
-    showToast('error', 'Error!', 'Please provide your email and password.');
-    return;
-  }
-  setIsLoading(true);
-  try {
-    await signInWithEmailAndPassword(auth, emailAddress, password);
-    showToast('success', 'Login Successful!', 'Redirecting...');
-  } catch (error: any) {
-    showToast('error', 'Login Failed', error.message || 'Something went wrong.');
-  } finally {
-    setIsLoading(false);
-  }
-};
+    if (!emailAddress) {
+      showToast("error", "Email Required", "Please enter your email address.");
+      return;
+    }
+    if (!password) {
+      showToast("error", "Password Required", "Please enter your password.");
+      return;
+    }
+    setIsLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, emailAddress, password);
+      showToast("success", "Login Successful!", "Redirecting...");
+      // navigation.navigate("Home");
+    } catch (error: any) {
+      switch (error.code) {
+        case "auth/invalid-email": {
+          showToast(
+            "error",
+            "Invalid Email",
+            "Please enter a valid email address."
+          );
+          break;
+        }
+
+        case "auth/user-not-found": {
+          showToast(
+            "error",
+            "Account Not Found",
+            "No account exists with this email address."
+          );
+          break;
+        }
+
+        case "auth/wrong-password": {
+          showToast(
+            "error",
+            "Incorrect Password",
+            "The password you entered is incorrect."
+          );
+          break;
+        }
+
+        case "auth/invalid-credential": {
+          showToast(
+            "error",
+            "Invalid Credentials",
+            "Your email or password is incorrect."
+          );
+          break;
+        }
+
+        case "auth/user-disabled": {
+          showToast(
+            "error",
+            "Account Disabled",
+            "This account has been disabled."
+          );
+          break;
+        }
+
+        case "auth/too-many-requests": {
+          showToast(
+            "error",
+            "Too Many Attempts",
+            "Access temporarily disabled due to many failed login attempts. Try again later or reset your password."
+          );
+          break;
+        }
+
+        case "auth/network-request-failed": {
+          showToast(
+            "error",
+            "Network Error",
+            "Please check your internet connection and try again."
+          );
+          break;
+        }
+
+        case "auth/internal-error": {
+          showToast(
+            "error",
+            "Authentication Error",
+            "An internal error occurred. Please try again later."
+          );
+          break;
+        }
+
+        default: {
+          console.error("Firebase login error:", error.code, error.message);
+          showToast(
+            "error",
+            "Login Failed",
+            "Unable to sign in. Please try again."
+          );
+          break;
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView style={Login_Styles.safeArea}>
@@ -109,7 +196,7 @@ const LoginScreen = () => {
               <AuthButton
                 onPress={handleLogin}
                 isLoading={isLoading}
-                buttonText={"Login In"}
+                buttonText={"Login"}
               />
 
               {/* Sign up option */}
@@ -129,12 +216,6 @@ const LoginScreen = () => {
               <View style={Login_Styles.socialButtonsRow}>
                 <TouchableOpacity style={Login_Styles.socialButton}>
                   <Text style={Login_Styles.socialButtonText}>G</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={Login_Styles.socialButton}>
-                  <Text style={Login_Styles.socialButtonText}>f</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={Login_Styles.socialButton}>
-                  <Text style={Login_Styles.socialButtonText}>in</Text>
                 </TouchableOpacity>
               </View>
             </View>

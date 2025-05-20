@@ -1,17 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-export type IconType = 'quran' | 'memorization' | 'tafsir' | 'questions' | 'path' | 'settings';
-
-interface NavCardProps {
-  title: string;
-  iconType: IconType;
-  backgroundColor: string;
-  textColor: string;
-  description?: string;
-  onPress: () => void;
-}
+import { IconType , NavCardProps } from '../../Types/UIPropsTypes';
 
 const getIconName = (iconType: IconType): string => {
   switch (iconType) {

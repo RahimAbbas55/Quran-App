@@ -1,22 +1,13 @@
 import React from "react";
 import {
-  ViewStyle,
-  TextStyle,
   Text,
   TouchableOpacity,
   StyleSheet,
   Dimensions,
 } from "react-native";
 import { GlobalColors } from "../../constants/GlobalColors";
-
+import { CustomButtonProps } from "../../Types/UIPropsTypes";
 const { width, height } = Dimensions.get("window");
-
-interface CustomButtonProps {
-  onPress: () => void;
-  style?: ViewStyle | TextStyle;
-  isLoading: boolean;
-  buttonText?: string;
-}
 
 const AuthButton: React.FC<CustomButtonProps> = ({
   onPress,
