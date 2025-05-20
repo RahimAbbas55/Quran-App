@@ -39,9 +39,22 @@ const LoginScreen = () => {
     }
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, emailAddress, password);
-      showToast("success", "Login Successful!", "Redirecting...");
-      // navigation.navigate("Home");
+      const response = await signInWithEmailAndPassword(
+        auth,
+        emailAddress,
+        password
+      );
+      const user = response.user;
+
+      if (!user.emailVerified) {
+        await auth.signOut(); // Sign out the unverified user
+        showToast(
+          "error",
+          "Email Not Verified",
+          "Please verify your email before logging in."
+        );
+        return;
+      }
     } catch (error: any) {
       switch (error.code) {
         case "auth/invalid-email": {

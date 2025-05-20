@@ -21,7 +21,6 @@ import {
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../data-service/firebase";
-import { useAuth } from "../../../context/AuthContext";
 import { FormData, FormErrors } from "../../../Types/SignupFormTypes";
 import InputField from "../../../components/Reusable-Components/InputField";
 import LinkButton from "../../../components/Reusable-Components/LinkButton";
@@ -39,7 +38,6 @@ const SignUpScreen: React.FC = () => {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { logout } = useAuth();
   const navigation = useNavigation<AuthStackNavProp>();
 
   const validateForm = (): boolean => {
@@ -105,15 +103,16 @@ const SignUpScreen: React.FC = () => {
       // Send email verification
       await sendEmailVerification(user);
 
-      await signOut(auth);
-
       showToast(
         "success",
         "Sign Up Successful!",
         "Please verify your email to continue."
       );
       setTimeout(() => {
-        navigation.navigate("Login");
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Login" }],
+        });
       }, 3000);
     } catch (error: any) {
       const errorCode = error.code;

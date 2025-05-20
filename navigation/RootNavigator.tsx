@@ -15,7 +15,7 @@ export default function RootNavigator() {
     );
   }
   if (user){
-    console.log(user)
+    // console.log(user)
     // logout()
   }
   return user ? <MainNavigator /> : <AuthNavigator />;
